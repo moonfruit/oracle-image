@@ -12,7 +12,6 @@ RUN yum -y install patch && \
     rm -rf /var/tmp/yum-*
 
 RUN $INSTALL_DIR/initOracle.sh && \
-    /etc/init.d/oracle-xe-18c stop && \
     rm -rf $INSTALL_DIR
 
 CMD exec $ORACLE_BASE/$RUN_FILE

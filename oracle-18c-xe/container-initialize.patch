@@ -1,0 +1,10 @@
+--- container-entrypoint.sh	2021-10-20 16:00:00.000000000 +0800
++++ container-initialize.sh	2021-10-20 16:00:00.000000000 +0800
+@@ -437,6 +437,4 @@
+   exit 1;
+ fi;
+ 
+-tail -f "${ORACLE_BASE}"/diag/rdbms/*/"${ORACLE_SID}"/trace/alert_"${ORACLE_SID}".log &
+-childPID=$!
+-wait ${childPID}
++stop_database

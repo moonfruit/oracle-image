@@ -15,6 +15,6 @@ RUN cp ${ORACLE_BASE}/container-entrypoint.sh /install/container-initialize.sh &
 # rm -r /install/
 
 RUN microdnf -y remove patch && \
-    mocrodnf clean all
+    microdnf clean all
 
 USER oracle

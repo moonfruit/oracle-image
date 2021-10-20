@@ -4,11 +4,17 @@ ENV ORACLE_PASSWORD=test \
     APP_USER=test \
     APP_USER_PASSWORD=test
 
-COPY container-initialize.patch ${ORACLE_BASE}
-RUN cp container-entrypoint.sh container-initialize.sh && \
+COPY container-initialize.patch cleanup.sh /install/
+
+USER root
+RUN cp container-entrypoint.sh /install/container-initialize.sh && \
     microdnf -y install patch && \
-    patch container-initialize.sh < container-initialize.patch && \
+    patch /install/container-initialize.sh < /install/container-initialize.patch && \
     microdnf -y remove patch && \
     microdnf clean all && \
-    container-initialize.sh && \
-    rm -fr container-initialize.*
+    chown oracle:dba /install/container-initialize.sh && \
+    chmod 4755 /install/cleanup.sh
+
+USER oracle
+RUN /install/container-initialize.sh && \
+    /install/cleanup.sh
